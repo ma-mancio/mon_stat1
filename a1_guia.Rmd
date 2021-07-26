@@ -1,0 +1,418 @@
+---
+title: "Aula 1"
+author: "mamancio"
+date: "20/07/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Monitoria 1: Introdução ao R
+
+# O que é o R? 
+
+```{r}
+#Addition: +
+#Subtraction: -
+#Multiplication: *
+#Division: /
+#Exponentiation: ^
+#Modulo: %%
+#log (base =, x =)
+#rnorm(2)
+
+```
+
+
+# Assigment -> <-
+  # chamar um elemento
+  # operações com elementos
+  
+# Tipos de dados (integer, logical, numeric/doubles, characters/string)
+  # testes de  class(x)
+```{r}
+class(1)
+class(FALSE)
+class("Texto")
+```
+  
+# operações com dados diferentes
+
+```{r}
+1 + 2
+TRUE + 1
+TRUE + FALSE
+
+```
+1 + "dois" retorna um erro
+  
+#Vetores
+  ## Vetores carregam um tipo de dado
+  
+```{r}
+numeric_vector <- c(1, 10, 49)
+character_vector <- c("a", "b", "c")
+boolean_vector <- c(TRUE, FALSE, TRUE)
+# A classe de um vetor é seu primeiro elemento
+  class(boolean_vector)
+
+what_vector <- c("a", 5, TRUE)
+  class(what_vector)
+```
+  
+  
+## chamar um elemento de um vetor [], renomear o elemento
+  # sample, sort, 1:X
+  
+```{r}
+sample(c(1, 5, 78, 2, 3))
+sort(c(1, 5, 78, 2, 3))
+sort(c(1, 5, 78, 2, 3), decreasing = TRUE)
+
+#qual diferença? Vamos olhar a função sort
+?sort
+  
+```
+
+  
+# operação com vetores
+
+```{r}
+trade_vector <- c(140, -50, 20, -120, 240)
+stocks_vector <-  c(-24, -50, 100, -350, 10)
+
+# Qual foi o saldo?
+trade_vector + stocks_vector
+
+```
+
+# nomeando um 
+## modo 1
+```{r}
+notas <- c("Camila" = 5, "Eduardo" = 7)
+notas
+```
+
+#modo 2
+```{r}
+
+notas_gennins <- c(1:5, 5, 8)
+  nomes_gennins <- c("Naruto", "Kiba", "Rock Lee", "Hinata", "Sakura", "Sasuke")
+  names(notas_gennins) <- nomes_gennins
+  notas_gennins
+  
+
+```
+  
+## Opa! Falta um nome (NA no 7° elemento)
+## podemos usar [] para nos referir a um elemento de um vetor
+```{r}
+# chamando o segundo elemento 
+notas_gennins[2]
+#chamando os 4 primeiros elementos
+notas_gennins[1:4]
+# chamando os 4 últimos elementos
+notas_gennins[4:7]
+```
+
+## podemos usar a seleção para nomear o elemento que está com Na [7]
+
+```{r}
+names(notas_gennins)[7] <- "Shikamaru"
+notas_gennins  
+```
+
+  
+# Dando uma olhada nas nossas notas
+
+```{r}
+summary(notas_gennins)
+max(notas_gennins) -> mais_alta
+min(notas_gennins) -> mais_baixa
+print(mais_alta) 
+mais_baixa
+#observe que o a função "print()" tem o mesmo efeito de chamar o elemento
+```
+
+## podemos também fazer um gráfico
+
+```{r}
+plot(notas_gennins)
+
+```
+
+
+# Comparações
+```{r}
+# <  menor que
+10 < 5
+# >  maior que
+10 > 5
+# <= menor ou igual a
+10 <= 5
+# >=  maior ou igual a
+10 >= 5
+# ==  igual a
+10 == 5+5
+10 == (100/50) * 5
+TRUE == 1
+# != diferente de 
+TRUE != 1
+FALSE != 1
+2 != 8/4
+```
+
+#Podemos usar comparações em vetores!
+```{r}
+# Gennins com notas maiores ou igual a 4
+notas_gennins >= 4
+
+```
+```{r}
+# Gennins com notas iguais a 4
+notas_gennins == 4
+```
+```{r}
+# Gennins com notas diferentes de 4
+notas_gennins != 4
+```
+
+
+Podemos usar a lógica para selecionar elementos dos vetores!
+
+```{r}
+melhores_gennins <- notas_gennins > 4
+notas_gennins[melhores_gennins]
+```
+agora chamando os alunos com notas < 4, usando a negação
+```{r}
+notas_gennins[!melhores_gennins]
+```
+
+
+# Algumas operações com vetores
+
+#Quantos pontos totais eles tiveram? 
+```{r}
+sum(notas_gennins)
+
+```
+
+#Média
+```{r}
+mean(notas_gennins)
+
+```
+
+# Variância
+```{r}
+var(notas_gennins)
+
+```
+
+#Desvio Padrão
+```{r}
+sd(notas_gennins)
+
+```
+
+O desvio padrão é a raiz quadrada da variância, confere?
+
+```{r}
+sd(notas_gennins) == (sqrt(var(notas_gennins)))
+```
+
+#Quantos pontos fez o time 7?
+
+```{r}
+sum(notas_gennins[c("Sasuke", "Sakura", "Naruto")])
+```
+ou
+
+sum(notas_gennins[c(1, 5)])
+```{r}
+sum(notas_gennins[1], notas_gennins[5], notas_gennins["Sasuke"])
+
+```
+ou ainda
+```{r}
+sum(notas_gennins[c(1, 5, 6)])
+
+```
+ou seja, podemos nos referenciar ao n° do elemento ou seu nome
+
+
+# Naruto colou no teste e foi eliminado! E agora? 
+
+```{r}
+notas_gennins["Naruto"] <- NA
+notas_gennins
+```
+
+```{r}
+mean(notas_gennins)
+```
+se fizermos a média (ou a maioria das outras funções) com um elemento NA, o R nos retorna NA. 
+Vamos olhar para a função mean
+```{r}
+?mean
+```
+
+
+a função é configurada para receber na.rm = FALSE, ou seja, ela não elimina os NA. Toda função que tem elementos definidos (com um "="), recebe esses elementos como padrão. Mas podemos mudar isso. 
+
+```{r}
+mean(notas_gennins, na.rm = TRUE)
+```
+Agora a nota do naruto é ignorada! Veja que temos os mesmos resultados que simplesmente ignorar o Narut (elemento [1] do nosso vetor)
+
+```{r}
+mean(notas_gennins[2:7])
+```
+
+
+#R entende os nomes
+O time 7 fez 3 testes, vamos olhar suas notas.
+```{r}
+time7notas1 <- c(5, 4, 1)
+time7notas2 <- c(5, 5, 2)
+time7notas3 <- c(5, 3, 3)
+time7nomes <- c("Sakura", "Sasuke", "Naruto")
+names(time7notas1) <- time7nomes
+names(time7notas2) <- time7nomes
+names(time7notas3) <- time7nomes
+time7notas1
+time7notas2
+time7notas3
+```
+Vamos ver a nota total de cada um, e a nota de todos juntos
+```{r}
+(time7notas1 + time7notas2 + time7notas3[na.rm = TRUE])
+
+```
+```{r}
+sum(time7notas1, time7notas2, time7notas3, na.rm = TRUE)
+
+```
+
+# Comparando elementos de vetores diferentes
+
+```{r}
+time7 <- c("Sakura" = 5, "Sasuke" = 4, "Naruto" = 3)
+time10 <- c("Ino" = 4, "Shikamaru" = 6, "Chouji" = 4)
+time8 <- c("Hinata" = 4, "Shino" = 4, "Kiba" = 3)
+
+#Sakura tirou uma nota maior que Ino? 
+
+time7["Sakura"] > time10["Ino"]
+
+```
+
+# indo um pouco além
+
+Um data.frame com todas as notas do time 7
+?data.frame
+```{r}
+data.frame("Genjutsu" = time7notas1, "Ninjutsu" = time7notas2, "Taijutsu" = time7notas3) -> dftime7
+dftime7
+```
+
+Adicionando uma linha
+Queremos ver a soma dos resultados de cada um
+
+```{r}
+Total <- c(time7notas1 + time7notas2 + time7notas3)
+Total
+```
+```{r}
+cbind(dftime7, Total) -> dftime7n
+dftime7n
+```
+
+Adicionar o total em cada categoria
+```{r}
+rbind(dftime7n, "Total" = c(sum(dftime7n[1]), sum(dftime7n[2]), sum(dftime7n[3]), sum(dftime7n[4])))
+```
+
+
+## Um data.frame com todos os times
+```{r}
+data.frame(time7, time8, time10, row.names = NULL) -> dfnotas_folha
+dfnotas_folha
+```
+
+# Chamando elementos de um data.frame 
+um data frame tem linhas e colunas. Continuaremos a usar [], sendo o primeiro elemento a linha e o segundo a coluna
+```{r}
+## busque a segunda nota do time 8 (coluna [2])
+
+dfnotas_folha[2, 2]
+# todas as notas do time 8
+dfnotas_folha[, 2]
+
+```
+se deixamos um elemento em branco, significa que queremos todos. Ex: um data frame de l linhas e c colunas:
+Todas as linhas [ , c]
+Todas as coluinas [l, ]
+```{r}
+# sem o time 7 (sem a coluna 1, todas as linhas)
+dfnotas_folha[, 2:3]
+```
+```{r}
+# apenas o primeiro membro de cada time
+dfnotas_folha [1,]
+```
+```{r}
+# Podemos fazer comparações também
+dfnotas_folha >= 4
+
+```
+
+
+# Um pouco mais do que podemos fazer... 
+
+```{r}
+palmerpenguins::penguins -> penguins
+library(tidyverse)
+head(penguins)
+```
+mostrar o .pdf do penguins
+
+# quantos de cada espécie?
+```{r}
+penguins %>%
+  count(species)
+```
+
+
+# as médias de cada espécie
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarize(across(where(is.numeric), mean, na.rm = TRUE))
+
+```
+
+
+#Encontre quantos penguins de cada espécie vivem em cada ilha
+
+```{r}
+penguins %>%
+  group_by(species, island) %>%
+  summarise(contagem = n())
+```
+
+
+
+# encontre quantos penguins de cada sexo são acima do peso da própria espécie
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  filter(body_mass_g > mean(body_mass_g, na.rm = TRUE)) %>%
+  group_by(sex, species) %>%
+  summarise(cont = n())
+```
+
